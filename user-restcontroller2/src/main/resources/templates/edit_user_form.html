@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta http-equiv="Content-Type" content="text/html;charset=UTF-8">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+
+    <title>Title</title>
+    <style>
+      .title{
+             background: linear-gradient(to bottom, #52E5E7 15%, #130CB7 100%);
+             background: -webkit-linear-gradient( to bottom,#52E5E7 15%, #130CB7 100%);
+             background-clip: text;
+             -webkit-background-clip: text;
+             color: transparent;
+
+        }
+    </style>
+</head>
+<body>
+<div style="padding:10% 3%; min-height:100vh;   display: flex; background: linear-gradient(15deg,#794095,#0d1430); background-size:cover">
+    <div class="container" style=" border-radius: 10px; width:100%; background: rgba(255, 255, 255, .5); backdrop-filter: blur(10px) ">
+        <h1 class="text-center title test ">
+            <small>任務回報</small>
+        </h1>
+        <div class="col-lg-8 m-auto d-block"></div>
+            <div class="form-group">
+                <label>姓名 (name):</label>
+                <input type="text" id="name" class="form-control" pattern="[A-Za-z]{1,20}" title="only 20 alphabet most" required>
+            </div>
+
+            <div class="form-group">
+                <label>年齡(Age):</label>
+                <input type="number" id="age" class="form-control" pattern="[0-9]{1,2}" title="only 1~99" required>
+            </div>
+            <input type="button" id="btn1" class="btn btn-success" value="Save" />
+    </div>
+</div>
+</body>
+<script>
+document.getElementById("btn1").onclick = () =>{
+
+<!--get current url-->
+   let url  = window.location.href;
+  const digit = url.charAt(url.length-1);
+  var name = document.getElementById("name").value;
+  var age = document.getElementById("age").value;
+  var newUrl = "/users/update/"+digit;
+
+  const obj = {
+      name:name,
+      age:age
+  }
+
+   <!--change object to JSON form-->
+   const jsonData = JSON.stringify(obj);
+   const xhr = new XMLHttpRequest();
+   console.log(jsonData);
+   xhr.open("PUT", newUrl);
+   xhr.setRequestHeader("content-type", "application/json");
+   xhr.send(jsonData);
+
+   xhr.onload = () =>{
+       window.location.href = "/users";
+   }
+  }
+</script>
+</html>
